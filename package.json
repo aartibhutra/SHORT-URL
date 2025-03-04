@@ -1,0 +1,22 @@
+{
+  "name": "short-url",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aartibhutra/SHORT-URL.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aartibhutra/SHORT-URL/issues"
+  },
+  "homepage": "https://github.com/aartibhutra/SHORT-URL#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
