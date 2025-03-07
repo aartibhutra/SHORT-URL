@@ -12,6 +12,11 @@ connectToMongoDB("mongodb://127.0.0.1:27017/short-url")
 //MiddleWare: pass incoming bodies 
 app.use(express.json());
 
+// route : server side rendering 
+app.get('/test' , (req,res) => {
+    return res.end('<h1>Hey From Server</h1>');
+});
+
 app.use("/url" ,urlRoute);
 
 // for dynamic route :
