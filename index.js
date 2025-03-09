@@ -15,7 +15,7 @@ connectToMongoDB("mongodb://127.0.0.1:27017/short-url")
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 // let know the express that where are the views(ejs files)
-app.set('views', './views');
+app.set('views', path.resolve('./views'));
 
 //MiddleWare: pass incoming bodies 
 app.use(express.json());
@@ -23,18 +23,12 @@ app.use(express.json());
 // route : server side rendering 
 app.get('/test' , async (req,res) => {
     const allUrls = await URL.find({});
-    return res.end(
-        `
-        <html>
-            <head></head>
-            <body>
-                <ol>
-                    ${allUrls.map(url => `<li>${url.shortId} - ${url.redirectURL} - ${url.visitHistory.length} </li>`).join('')}
-                </ol>
-            </body>
-        </html>
-        `
-    )
+    // render the home file with the data
+    // here data is the object that we passed in the res.render()
+    // here we can also pass variables
+    return res.render('home',{
+        urls: allUrls,
+    });
 });
 
 app.use("/url" ,urlRoute);
