@@ -20,6 +20,8 @@ app.set('views', path.resolve('./views'));
 
 //MiddleWare: pass incoming bodies 
 app.use(express.json());
+// middleware: to pass the form data
+app.use(express.urlencoded({ extended: false }));
 
 // route : server side rendering 
 // app.get('/test' , async (req,res) => {
