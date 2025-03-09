@@ -21,15 +21,15 @@ app.set('views', path.resolve('./views'));
 app.use(express.json());
 
 // route : server side rendering 
-app.get('/test' , async (req,res) => {
-    const allUrls = await URL.find({});
-    // render the home file with the data
-    // here data is the object that we passed in the res.render()
-    // here we can also pass variables
-    return res.render('home',{
-        urls: allUrls,
-    });
-});
+// app.get('/test' , async (req,res) => {
+//     const allUrls = await URL.find({});
+//     // render the home file with the data
+//     // here data is the object that we passed in the res.render()
+//     // here we can also pass variables
+//     return res.render('home',{
+//         urls: allUrls,
+//     });
+// });
 
 app.use("/url" ,urlRoute);
 
