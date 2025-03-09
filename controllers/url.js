@@ -12,7 +12,11 @@ async function handleGenerateNewShortURL(req,res) {
         visitHistory : [],
     });
 
-    return res.json({ id : shortID});
+    // I don't want to send the json file here, I want to send the  url 
+    return res.render('home',{
+        id : shortID,
+    });
+    // return res.json({ id : shortID});
 };
 
 async function handleGetAnalytics(req , res) {
