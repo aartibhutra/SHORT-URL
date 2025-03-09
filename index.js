@@ -4,6 +4,7 @@ const express = require("express");
 const path = require("path");
 const {connectToMongoDB} = require('./connect');
 const urlRoute = require('./routes/url');
+const staticRoute = require('./routes/staticRouter');
 const URL = require('./models/url');
 
 const app = express();
@@ -32,6 +33,8 @@ app.use(express.json());
 // });
 
 app.use("/url" ,urlRoute);
+
+app.use("/" , staticRoute);
 
 // for dynamic route :
 app.get('/url/:shortId', async (req , res) => {
