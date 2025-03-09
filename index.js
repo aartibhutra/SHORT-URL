@@ -9,6 +9,9 @@ const PORT = 8000;
 connectToMongoDB("mongodb://127.0.0.1:27017/short-url")
 .then(() => console.log('Mongodb Connected'));
 
+// set the view engine to ejs
+app.set('view engine', 'ejs');
+
 //MiddleWare: pass incoming bodies 
 app.use(express.json());
 
