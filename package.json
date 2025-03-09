@@ -17,6 +17,7 @@
   "homepage": "https://github.com/aartibhutra/SHORT-URL#readme",
   "description": "",
   "dependencies": {
+    "ejs": "^3.1.10",
     "express": "^4.21.2",
     "mongoose": "^8.12.0",
     "nanoid": "^5.1.2",
