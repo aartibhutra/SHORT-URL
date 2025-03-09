@@ -1,4 +1,7 @@
 const express = require("express");
+// use the path module (build-in module)
+//use for views connect with express
+const path = require("path");
 const {connectToMongoDB} = require('./connect');
 const urlRoute = require('./routes/url');
 const URL = require('./models/url');
@@ -11,6 +14,8 @@ connectToMongoDB("mongodb://127.0.0.1:27017/short-url")
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');
+// let know the express that where are the views(ejs files)
+app.set('views', './views');
 
 //MiddleWare: pass incoming bodies 
 app.use(express.json());
