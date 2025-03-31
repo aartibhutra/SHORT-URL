@@ -1,12 +1,12 @@
 const { nanoid } = require("nanoid");
-const URL = require('../models/url');
+const urls = require('../models/url');
 
 async function handleGenerateNewShortURL(req,res) {
     const body = req.body;
     if(!body.url) return res.status(400).json({ error :'url is required'});
 
     const shortID = nanoid(8);
-    await URL.create({
+    await urls.create({
         shortId : shortID,
         redirectURL : body.url,
         visitHistory : [],
@@ -21,7 +21,7 @@ async function handleGenerateNewShortURL(req,res) {
 
 async function handleGetAnalytics(req , res) {
     const shortId = req.params.shortId;
-    const result =await URL.findOne({ shortId });
+    const result =await urls.findOne({ shortId });
     return res.json({ 
         totalClicks : result.visitHistory.length , 
         analytics: result.visitHistory, })
