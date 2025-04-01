@@ -1,3 +1,5 @@
+// import uuid from 'uuid';
+const { v4: uuidv4 } = require('uuid');
 const User = require('../models/user');
 
 async function handleUserSignup(req , res){
@@ -17,6 +19,7 @@ async function handleUserLogin(req , res){
         return res.render("login" , {
             error: "Invalid Username or Password",
         });
+    const sessionId = uuidv4();
     return res.redirect("/");
 };
 
