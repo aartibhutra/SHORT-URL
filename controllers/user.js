@@ -2,6 +2,9 @@
 const { v4: uuidv4 } = require('uuid');
 const User = require('../models/user');
 
+// import { v4 as uuidv4 } from 'uuid';
+const{setUser} = require('../service/auth');
+
 async function handleUserSignup(req , res){
     const{ name , email , password } = req.body;
     await User.create({
@@ -20,6 +23,10 @@ async function handleUserLogin(req , res){
             error: "Invalid Username or Password",
         });
     const sessionId = uuidv4();
+    // set the session id in the cookie
+    setUser(sessionId , user);
+    res.cookie("uid",sessionId);
+    // redirect to homepage
     return res.redirect("/");
 };
 
