@@ -2,6 +2,13 @@ const express = require("express");
 // use the path module (build-in module)
 //use for views connect with express
 const path = require("path");
+
+// use the cookie-parser module (build-in module)
+const cookieParser = require("cookie-parser");
+
+const{restrictToLoggedInUserOnly} = require('./middlewares/auth');
+
+
 const {connectToMongoDB} = require('./connect');
 
 const URL = require('./models/url');
@@ -24,8 +31,13 @@ app.set('views', path.resolve('./views'));
 
 //MiddleWare: pass incoming bodies 
 app.use(express.json());
+
 // middleware: to pass the form data
 app.use(express.urlencoded({ extended: false }));
+
+// middleware: to pass the cookies
+app.use(cookieParser());
+
 
 // route : server side rendering 
 // app.get('/test' , async (req,res) => {
@@ -38,7 +50,8 @@ app.use(express.urlencoded({ extended: false }));
 //     });
 // });
 
-app.use("/url" , urlRoute);
+// inline middleware
+app.use("/url" ,restrictToLoggedInUserOnly, urlRoute);
 app.use("/user", userRoute);
 app.use("/", staticRoute); 
 
@@ -57,7 +70,10 @@ app.get('/url/:shortId', async (req , res) => {
             },
         }
     );
-    res.redirect(entry.redirectURL);
+    if (!entry) {
+        return res.status(404).send('URL not found');
+    }
+    return res.redirect(entry.redirectURL);
 });
 
 app.listen(PORT , () => console.log(`Server Started at PORT : ${PORT}`));
