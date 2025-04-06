@@ -16,6 +16,19 @@ async function restrictToLoggedInUserOnly(req , res , next){
     next();
 };
 
+// not force you should be logged in 
+async function checkAuth(req , res, next){
+    const userUid = req.cookies?.uid;
+    
+    
+    const user = getUser(userUid);
+    // if user is not present in the hashmap then redirect to login page
+    req.user = user;
+    // if user is present in the hashmap then call the next middleware
+    next();
+}
+
 module.exports = {
     restrictToLoggedInUserOnly,
+    checkAuth,
 };

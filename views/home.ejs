@@ -26,7 +26,7 @@
             <button type="submit">Generate</button>
         </form>
    </div>
-   <div>
+   <div style = "margin-top: 20px">
         <% if (locals.urls) { %>
          <table>
             <thead>
@@ -36,9 +36,9 @@
                 <th>Clicks</th>
             </thead>
             <tbody>
-                <% urls.forEach((url) => { %>
+                <% urls.forEach((url , index) => { %>
                 <tr>
-                 <!-- <td><%= index + 1 %></td> -->
+                 <td><%= index + 1 %></td>
                  <td><%= url.shortId %></td>
                  <td><%= url.redirectURL %></td>
                  <td><%= url.visitHistory.length %></td>

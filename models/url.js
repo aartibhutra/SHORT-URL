@@ -15,7 +15,6 @@ const urlSchema = new mongoose.Schema({
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "users",
-        required: true,
     },
 },
     {timestamps: true}
