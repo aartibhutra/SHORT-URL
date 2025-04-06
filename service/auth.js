@@ -1,15 +1,23 @@
-// create hashmap 
-// create a hashmap to store user data
-const sessionIdToUseMap = new Map();
+const jwt = require('jsonwebtoken');
+const secret = "Aarti$143"; // replace with your secret key
 
-function setUser(id , user){
-    // set the user in the hashmap
-    sessionIdToUseMap.set(id , user);
+// create tokens for the user
+function setUser(user){
+    return jwt.sign({
+        //payload
+        _id: user._id,
+        email: user.email,
+    }, secret);
 }
 
-function getUser(id){
-    // get the user from the hashmap
-    return sessionIdToUseMap.get(id);
+function getUser(token){
+    if(!token) return null;
+    try {
+        return jwt.verify(token, secret);
+    } catch (err) {
+        console.error('JWT verification failed:', err.message);
+        return null;
+    }
 }
 
 module.exports = {
