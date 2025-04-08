@@ -24,6 +24,8 @@ async function handleUserLogin(req , res){
         });
     // set the session id in the cookie
     const token = setUser(user);
+    // by default it creates a cookie with the name "uid"
+    // and the value of the token 
     res.cookie("uid",token);
     // redirect to homepage
     return res.redirect("/");
