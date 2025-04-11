@@ -19,10 +19,11 @@ async function restrictToLoggedInUserOnly(req , res , next){
 
 // not force you should be logged in 
 async function checkAuth(req , res, next){
-    const userUid = req.cookies?.uid;
+    const userUid = req.headers["authorization"];
+    const token = userUid.split('Bearer ')[1];
     
     
-    const user = getUser(userUid);
+    const user = getUser(token);
     // if user is not present in the hashmap then redirect to login page
     req.user = user;
     // if user is present in the hashmap then call the next middleware
