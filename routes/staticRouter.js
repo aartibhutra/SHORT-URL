@@ -5,8 +5,7 @@ const router = express.Router();
 
 // '/' means the root of the application (home page)
 router.get('/', async (req, res) => {
-     if(!req.user) return res.redirect('/login');
-    const allurls = await URL.find({ createdBy: req.user._id });
+     const allurls = await URL.find({ createdBy: req.user._id });
     // res.locals.urls = allUrls;
     return res.render("home",{
         urlS: allurls,

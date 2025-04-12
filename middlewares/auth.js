@@ -1,36 +1,33 @@
 const { getUser } = require("../service/auth");
-async function restrictToLoggedInUserOnly(req , res , next){
-    const userUid = req.headers["Authorization"];
-    
-    // if userUid is not present in the cookie then redirect to login page
-    if(!userUid){
-        return res.redirect("/login");
-    }
-    const token = userUid.split('Bearer ')[1]; // remove the "Bearer " prefix
-    const user = getUser(token);
-    // if user is not present in the hashmap then redirect to login page
-    if(!user){
-        return res.redirect("/login");
-    }
-    req.user = user;
-    // if user is present in the hashmap then call the next middleware
-    next();
-};
 
-// not force you should be logged in 
-async function checkAuth(req , res, next){
-    const userUid = req.headers["authorization"];
-    const token = userUid.split('Bearer ')[1];
-    
-    
+// normal middleware : 
+function checkForAuthentication(req , res , next){
+    const authorizationHeaderValue = req.headers["authorization"];
+    req.user = null;
+    if(!authorizationHeaderValue || !authorizationHeaderValue.startsWith("Bearer ")){
+        return next();
+    }
+    const token = authorizationHeaderValue.split("Bearer ")[1];
     const user = getUser(token);
-    // if user is not present in the hashmap then redirect to login page
+
     req.user = user;
-    // if user is present in the hashmap then call the next middleware
-    next();
+    return next();
+}
+
+// role is basically like admin etc 
+// give a roles to an array of roles
+function restrictTo(roles = []){
+    return function (req , res , next){
+        if(!req.user) return res.redirect("/login");
+
+        if(!roles.includes(req.user.role)) res.end("UnAuthorized");
+
+        // if both conditions are false then we can go to next middleware
+        return next();
+    };
 }
 
 module.exports = {
-    restrictToLoggedInUserOnly,
-    checkAuth,
+    checkForAuthentication,
+    restrictTo,
 };

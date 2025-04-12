@@ -4,7 +4,7 @@ const express = require("express");
 const path = require("path");
 // use the cookie-parser module (build-in module)
 const cookieParser = require("cookie-parser");
-const{restrictToLoggedInUserOnly,checkAuth} = require('./middlewares/auth');
+const{checkForAuthentication,restrictTo} = require('./middlewares/auth');
 const {connectToMongoDB} = require('./connect');
 const URL = require('./models/url');
 const urlRoute = require('./routes/url');
@@ -28,10 +28,12 @@ app.use(express.urlencoded({ extended: false }));
 // middleware: to pass the cookies
 app.use(cookieParser());
 
+app.use(checkForAuthentication)
+
 // inline middleware
-app.use("/url" ,restrictToLoggedInUserOnly, urlRoute);
+app.use("/url" ,restrictTo(["NORMAL"]), urlRoute);// restrict to normal user
 app.use("/user", userRoute);
-app.use("/",checkAuth, staticRoute); 
+app.use("/", staticRoute); 
 
 // for dynamic route :
 app.get('/url/:shortId', async (req , res) => {
