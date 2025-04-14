@@ -1,13 +1,14 @@
 const { getUser } = require("../service/auth");
 
 // normal middleware : 
+// this is an Authentication middleware
 function checkForAuthentication(req , res , next){
-    const authorizationHeaderValue = req.headers["authorization"];
+    const tokenCookie = req.cookies?.token;
     req.user = null;
-    if(!authorizationHeaderValue || !authorizationHeaderValue.startsWith("Bearer ")){
+    if(!tokenCookie){
         return next();
     }
-    const token = authorizationHeaderValue.split("Bearer ")[1];
+    const token =tokenCookie;
     const user = getUser(token);
 
     req.user = user;
@@ -16,6 +17,7 @@ function checkForAuthentication(req , res , next){
 
 // role is basically like admin etc 
 // give a roles to an array of roles
+// this is an Authorization middleware
 function restrictTo(roles = []){
     return function (req , res , next){
         if(!req.user) return res.redirect("/login");

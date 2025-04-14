@@ -31,7 +31,7 @@ app.use(cookieParser());
 app.use(checkForAuthentication)
 
 // inline middleware
-app.use("/url" ,restrictTo(["NORMAL"]), urlRoute);// restrict to normal user
+app.use("/url" ,restrictTo(["NORMAL" , "ADMIN"]), urlRoute);// restrict to normal user
 app.use("/user", userRoute);
 app.use("/", staticRoute); 
 

@@ -27,9 +27,9 @@ async function handleUserLogin(req , res){
 
     // by default it creates a cookie with the name "uid"
     // and the value of the token 
-    // res.cookie("uid",token);
+    res.cookie("token",token);
 
-    return res.json({token});
+    return res.redirect("/");
 
     // redirect to homepage
     // return res.redirect("/");
